@@ -1,0 +1,16 @@
+{
+    "language": "IT",
+    "magicWord": "12abcdef42",
+    "dataArraySize": 8,
+    "ledAxisX": 4,
+    "ledAxisY": 4,
+    "screenRefresh": 1000,
+    "defaultPort": "COM4",
+    "macroKeys":3,
+    "profiles":[{
+            "id":1,
+            "name":"profilo 1",
+            "leds":[{}],
+            "display":[{}]
+    }]
+}
