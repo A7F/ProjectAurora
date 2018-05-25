@@ -70,7 +70,7 @@ public class Led extends JLabel {
         data.setLedId(ledId - 1);
         data.setBrightness(brightness);
         data.setRGB(color.getRed(), color.getGreen(), color.getBlue());
-        SerialHandler.getInstance().sendData(data.getVector());
+        SerialHandler.getInstance().sendData(data.getByteVector());
         setBackground(color);
     }
 

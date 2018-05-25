@@ -1,16 +1,17 @@
 {
-    "language": "IT",
-    "magicWord": "12abcdef42",
-    "dataArraySize": 8,
-    "ledAxisX": 4,
-    "ledAxisY": 4,
-    "screenRefresh": 1000,
     "defaultPort": "COM4",
-    "macroKeys":3,
-    "profiles":[{
-            "id":1,
-            "name":"profilo 1",
-            "leds":[{}],
-            "display":[{}]
-    }]
+    "screenRefresh": 1000,
+    "baudrate": 115200,
+    "dataArraySize": 8,
+    "macroKeys": 3,
+    "magicWord": "ada",
+    "ledAxisY": 4,
+    "profiles": [{
+            "display": [{}],
+            "name": "profilo 1",
+            "leds": [{}],
+            "id": 1
+        }],
+    "ledAxisX": 4,
+    "language": "en"
 }

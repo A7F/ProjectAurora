@@ -5,6 +5,15 @@
  */
 package com.luke.projectaurora.graphics;
 
+import com.luke.projectaurora.core.AppConfig;
+import com.luke.projectaurora.core.Locales;
+import com.luke.projectaurora.core.SerialHandler;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.SpinnerNumberModel;
+import jssc.SerialPort;
+
 /**
  *
  * @author Luke
@@ -32,26 +41,27 @@ public class SettingsPanel extends javax.swing.JPanel {
         comComboBox = new javax.swing.JComboBox<>();
         xAxisLabel = new javax.swing.JLabel();
         xAxisSpinner = new javax.swing.JSpinner();
-        cancelButton = new javax.swing.JButton();
         applyButton = new javax.swing.JButton();
         languageComboBox = new javax.swing.JComboBox<>();
         yAxisLabel = new javax.swing.JLabel();
         yAxisSpinner = new javax.swing.JSpinner();
+        macroKeysLabel = new javax.swing.JLabel();
+        macroKeysSpinner = new javax.swing.JSpinner();
+        baudrateLabel = new javax.swing.JLabel();
+        baudrateComboBox = new javax.swing.JComboBox<>();
 
         languageLabel.setText("Language:");
 
         comLabel.setText("Default COM:");
 
-        comComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comComboBox.setModel(new DefaultComboBoxModel(SerialHandler.getInstance().getPorts().toArray()));
+        if(SerialHandler.getInstance().getPorts().isEmpty()){
+            comComboBox.setEnabled(false);
+        }
 
         xAxisLabel.setText("X axis leds:");
 
-        cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
+        xAxisSpinner.setModel(new SpinnerNumberModel(AppConfig.getInstance().getLedAxisX(),1,20,1));
 
         applyButton.setText("Apply");
         applyButton.addActionListener(new java.awt.event.ActionListener() {
@@ -60,9 +70,29 @@ public class SettingsPanel extends javax.swing.JPanel {
             }
         });
 
-        languageComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ArrayList<String> values = new ArrayList<>(Locales.getInstance().getSupportedLanguages().values());
+        for(String value : values){
+            languageComboBox.addItem(value);
+        }
+        languageComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                languageComboBoxActionPerformed(evt);
+            }
+        });
 
         yAxisLabel.setText("Y axis leds:");
+
+        yAxisSpinner.setModel(new SpinnerNumberModel(AppConfig.getInstance().getLedAxisY(),1,20,1));
+
+        macroKeysLabel.setText("Macro keys:");
+
+        macroKeysSpinner.setCursor(null);
+        macroKeysSpinner.setModel(new SpinnerNumberModel(AppConfig.getInstance().getMacroKeys(),0,10,1));
+
+        baudrateLabel.setText("BaudRate:");
+
+        baudrateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new Integer[] { SerialPort.BAUDRATE_57600, SerialPort.BAUDRATE_115200, SerialPort.BAUDRATE_128000, SerialPort.BAUDRATE_256000 }));
+        baudrateComboBox.setSelectedItem(AppConfig.getInstance().getBaudrate());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -71,30 +101,34 @@ public class SettingsPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(applyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(xAxisLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(xAxisSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(yAxisLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(yAxisSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(macroKeysLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(macroKeysSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(languageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(languageComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(12, 12, 12))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(xAxisLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(xAxisSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(languageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(baudrateLabel)
+                                .addGap(101, 101, 101)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(yAxisLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(yAxisSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(applyButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                            .addComponent(baudrateComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(languageComboBox, 0, 143, Short.MAX_VALUE)
+                            .addComponent(comComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,34 +143,55 @@ public class SettingsPanel extends javax.swing.JPanel {
                     .addComponent(comLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(macroKeysLabel)
+                    .addComponent(macroKeysSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(baudrateLabel)
+                    .addComponent(baudrateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(xAxisLabel)
                     .addComponent(xAxisSpinner)
-                    .addComponent(xAxisLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(yAxisLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(yAxisSpinner))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(applyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(applyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cancelButtonActionPerformed
-
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        // TODO add your handling code here:
+        if(comComboBox.getSelectedItem() != null){
+            AppConfig.getInstance().setDefaultComPort(comComboBox.getSelectedItem().toString());
+        }
+        
+        for(HashMap.Entry entry : Locales.getInstance().getSupportedLanguages().entrySet()){
+            if(languageComboBox.getSelectedItem().toString().equals(entry.getValue())){
+                AppConfig.getInstance().setLanguage(entry.getKey().toString());
+            }
+        }
+        AppConfig.getInstance().setLedAxisX((Integer) xAxisSpinner.getValue());
+        AppConfig.getInstance().setLedAxisY((Integer) yAxisSpinner.getValue());
+        AppConfig.getInstance().setBaudrate((Integer) baudrateComboBox.getSelectedItem());
+        AppConfig.getInstance().setMacroKeys((Integer) macroKeysSpinner.getValue());
     }//GEN-LAST:event_applyButtonActionPerformed
+
+    private void languageComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_languageComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_languageComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
-    private javax.swing.JButton cancelButton;
+    private javax.swing.JComboBox<String> baudrateComboBox;
+    private javax.swing.JLabel baudrateLabel;
     private javax.swing.JComboBox<String> comComboBox;
     private javax.swing.JLabel comLabel;
     private javax.swing.JComboBox<String> languageComboBox;
     private javax.swing.JLabel languageLabel;
+    private javax.swing.JLabel macroKeysLabel;
+    private javax.swing.JSpinner macroKeysSpinner;
     private javax.swing.JLabel xAxisLabel;
     private javax.swing.JSpinner xAxisSpinner;
     private javax.swing.JLabel yAxisLabel;

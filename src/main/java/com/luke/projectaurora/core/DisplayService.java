@@ -32,6 +32,6 @@ public class DisplayService extends TimerTask{
         data.setVal3(value);
         
         data.setVal4(0);
-        SerialHandler.getInstance().sendData(data.getVector());
+        SerialHandler.getInstance().sendData(data.getByteVector());
     }
 }

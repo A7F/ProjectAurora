@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  * first panel, set and open connection + settings button
  * @author Luca
  */
-public class PanelComm extends JPanel{
+public class ComPanel extends JPanel{
     SerialHandler handler = SerialHandler.getInstance();
     JPanel comPanel = new JPanel();
     JComboBox box = new JComboBox();
@@ -25,7 +25,7 @@ public class PanelComm extends JPanel{
     JButton settings = new JButton("settings");
     SettingsFrame settingsFrame = new SettingsFrame();
     
-    public PanelComm(){
+    public ComPanel(){
         init();
     }
     

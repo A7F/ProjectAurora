@@ -437,7 +437,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="com.luke.projectaurora.graphics.PanelComm" name="panelComm1">
+    <Component class="com.luke.projectaurora.graphics.ComPanel" name="panelComm1">
     </Component>
   </SubComponents>
 </Form>

@@ -19,6 +19,7 @@ public class AppConfig {
     private Integer ledAxisX;
     private Integer ledAxisY;
     private Integer ledNum;
+    private Integer baudrate;
     private Integer macroKeys;
     private String defaultComPort;
     private Integer dataArraySize;
@@ -56,6 +57,8 @@ public class AppConfig {
         ledAxisY = temp.intValue();
         temp = (Long) json.get("macroKeys");
         macroKeys = temp.intValue();
+        temp = (Long) json.get("baudrate");
+        baudrate = temp.intValue();
         ledNum = ledAxisX + ledAxisY*2;
         defaultComPort = (String) json.get("defaultPort");
         temp = (Long) json.get("dataArraySize");
@@ -73,12 +76,22 @@ public class AppConfig {
         this.magicWord = magicWord;
         update();
     }
+    
+    public void setBaudrate(Integer baudrate) {
+        json.put("baudrate", baudrate);
+        this.baudrate = baudrate;
+        update();
+    }
+
+    public Integer getBaudrate() {
+        return baudrate;
+    }
 
     public String getLanguage() {
         return language;
     }
 
-    public Integer getMacroKeys() {
+    public int getMacroKeys() {
         return macroKeys;
     }
 
@@ -98,11 +111,11 @@ public class AppConfig {
         update();
     }
 
-    public Integer getLedNum() {
+    public int getLedNum() {
         return ledNum;
     }
 
-    public Integer getDataArraySize() {
+    public int getDataArraySize() {
         return dataArraySize;
     }
 
@@ -118,15 +131,15 @@ public class AppConfig {
         update();
     }
 
-    public Integer getDisplayRefreshRate() {
+    public int getDisplayRefreshRate() {
         return displayRefreshRate;
     }
 
-    public Integer getLedAxisX() {
+    public int getLedAxisX() {
         return ledAxisX;
     }
 
-    public Integer getLedAxisY() {
+    public int getLedAxisY() {
         return ledAxisY;
     }
 

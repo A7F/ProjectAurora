@@ -61,7 +61,7 @@ public class MainPanel extends javax.swing.JPanel {
         showLogoLabel = new javax.swing.JLabel();
         logoComboBox = new javax.swing.JComboBox<>();
         macroPanel = new javax.swing.JPanel();
-        panelComm1 = new com.luke.projectaurora.graphics.PanelComm();
+        panelComm1 = new com.luke.projectaurora.graphics.ComPanel();
 
         ledPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Leds"));
 
@@ -396,7 +396,7 @@ public class MainPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> oledLayoutComboBox;
     private javax.swing.JLabel oledLayoutLabel;
     private javax.swing.JPanel oledSettingsPanel;
-    private com.luke.projectaurora.graphics.PanelComm panelComm1;
+    private com.luke.projectaurora.graphics.ComPanel panelComm1;
     private javax.swing.JComboBox<String> presetComboBox;
     private javax.swing.JLabel presetLabel;
     private javax.swing.JButton setButton;
