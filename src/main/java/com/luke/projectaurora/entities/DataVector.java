@@ -125,6 +125,15 @@ public class DataVector {
         setDataLedVector();
         return this.data;
     }
+    
+    public byte[] getByteVector() {
+        setDataLedVector();
+        byte[] dataArray = new byte[size];
+        for(int i=0;i<data.length; i++){
+            dataArray[i] = (byte) data[i];
+        }
+        return dataArray;
+    }
 
     public int getSize() {
         return this.size;

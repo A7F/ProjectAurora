@@ -1,6 +1,6 @@
 package com.luke.projectaurora.core;
 
-import com.luke.projectaurora.graphics.CustomFrame;
+import com.luke.projectaurora.graphics.MainFrame;
 import java.util.Timer;
 
 public class Main {
@@ -10,7 +10,7 @@ public class Main {
         Timer timer = new Timer();
         timer.schedule(new DisplayService(), 0, 1500);
         
-        CustomFrame frame = new CustomFrame();
+        MainFrame frame = new MainFrame();
         LedGraphicHandler ledHandler = LedGraphicHandler.getInstance();
         
         frame.add(ledHandler.getMainPanel());

@@ -41,12 +41,12 @@ void loop() {
 }
 
 void serialEvent() {
-	while (Serial.available() < 8) {}		//wait until you have 8 bytes on queue
+	while (Serial.available()) {
 		for (int n = 0; n < 8; n++) {
 			inbytes[n] = Serial.read();
 		}
-	processInbytes();
-	Serial.flush();
+		processInbytes();
+	}
 }
 
 /*

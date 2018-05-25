@@ -1,6 +1,5 @@
 package com.luke.projectaurora.core;
 
-import com.luke.projectaurora.entities.DataVector;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,7 +19,9 @@ public class SerialHandler {
     private static SerialHandler instance;
     private AppConfig appConfig = AppConfig.getInstance();
     
-    private SerialHandler(){}
+    private SerialHandler(){
+        scanSerialPort();
+    }
     
     public static SerialHandler getInstance(){
         if(instance==null){
@@ -29,26 +30,9 @@ public class SerialHandler {
         return instance;
     }
 
-    public void scanSerialPort() {
+    public final void scanSerialPort() {
         ports.clear();
         Collections.addAll(ports, SerialPortList.getPortNames());
-    }
-    
-    public void shutAllLeds() {
-        if (portName == null) {
-            System.err.println("NESSUNA PORTA COM IMPOSTATA");
-        } else {
-            try {
-                DataVector data = DataVector.getInstance();
-                for(int i=0;i<appConfig.getLedNum();i++){
-                    data.setLedId(i);
-                    data.setRGB(0, 0, 0);
-                    serialPort.writeIntArray(data.getVector());
-                }
-            } catch (SerialPortException ex) {
-                System.out.println(ex);
-            }
-        }
     }
 
     public void sendData(String text) {
@@ -70,12 +54,24 @@ public class SerialHandler {
 
     public void sendData(int[] array) {
         if (portName == null) {
-            //System.out.println("SENDING DATA: " + Arrays.toString(array));
             System.err.println("NESSUNA PORTA COM IMPOSTATA");
         } else {
             try {
-                System.out.println("SENDING DATA: " + Arrays.toString(array));
+                System.out.println("SENDING: " + Arrays.toString(array));
                 serialPort.writeIntArray(array);
+            } catch (SerialPortException ex) {
+                System.out.println(ex);
+            }
+        }
+    }
+    
+    public void sendData(byte[] array) {
+        if (portName == null) {
+            System.err.println("NESSUNA PORTA COM IMPOSTATA");
+        } else {
+            try {
+                System.out.println("SENDING: " + Arrays.toString(array));
+                serialPort.writeBytes(array);
             } catch (SerialPortException ex) {
                 System.out.println(ex);
             }
