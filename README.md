@@ -4,6 +4,7 @@
 
 # Project Aurora
 > _"Taking RGB gaming mousepads a step further!"_
+
 This is an hardware-software project: if you are interested in the hardware part, check out [my post on instructables](https://www.instructables.com/id/Project-Aurora-a-Smart-Gaming-Mousepad-for-20/).
 This application is supposed to handle basically everything about the mousepad: lights, oled display and macro keys.
 _I really suggest you to visit the instructables post I wrote, for 2 main reasons: you can understand more, as this readme is still an early writing, and *voting the project for the color of the rainbow contest :))))*_
